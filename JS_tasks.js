@@ -146,5 +146,32 @@ function getUnique(list) {
 
 http://jscourse.com/task/incapsulated-counter
 <<<
+function createSummator(initialValue) {
+	var current = initialValue || 0;
+		
+	var actions = {
+		inc:  function(val){
+			return current += val || 1;
+		},
+		dec: function(val){
+			return current -= val || 1;
+		},
+		get: function(){
+			return current;
+		},
+	};
+	
+	return actions;
+}
+>>>
 
+http://jscourse.com/task/compose
+<<<TEMP
+function compose() {
+	for (var func in arguments){
+		if (func != 'length'){
+			return arguments[func];
+		}
+	};
+} 
 >>>
