@@ -166,12 +166,114 @@ function createSummator(initialValue) {
 >>>
 
 http://jscourse.com/task/compose
-<<<TEMP
+<<<
 function compose() {
-	for (var func in arguments){
-		if (func != 'length'){
-			return arguments[func];
-		}
+	var funcs = Array.prototype.slice.call(arguments);
+	
+	return funcs.reduce(function(next_func, func){
+		return function(){
+			return func(next_func.apply(this, arguments));
+		};
+	});
+};
+>>>
+
+http://jscourse.com/task/simple-templater
+<<<
+
+>>>
+
+http://jscourse.com/task/keeper
+<<<TEMP
+function createKeeper() {
+	var keyring = {};
+	var actions = {
+		put: function(key, value){
+			console.log('PUT ', key, value);
+			return keyring[key] = value;
+		},
+		get: function(key){
+			console.log('GET', key, keyring[key]);
+			return keyring[key] || null;
+		},
 	};
-} 
+	console.log('---');
+	return actions;
+}
+
+
+Замечание:
+
+Не отрабатывает с несуществующими ключами.
+
+var keeper = createKeeper();
+keeper.put({}, 999);
+keeper.get({});
+
+не вычисляется в null ---->>>> И НЕ ДОЛЖНО! WTF!?
+
+>>>
+
+http://jscourse.com/task/sequence-prototype
+<<<
+function Sequence(arr) {
+	this.pos = 0;
+	this.arr = arr;
+	
+	Sequence.prototype.go = function(ind){
+		this.pos = ind;
+		if (this.pos > this.arr.length-1){
+			this.pos = this.arr.length-1;
+		};
+		return this.arr[this.pos];
+	};
+	
+	Sequence.prototype.next = function(){
+		this.pos++;
+		if (this.pos > this.arr.length-1){
+			this.pos = 0;
+		};
+		return this.arr[this.pos];
+	};
+	
+	Sequence.prototype.prev = function(){
+		this.pos--;
+		if (this.pos < 0){
+			this.pos = this.arr.length-1;
+		};
+		return this.arr[this.pos];
+	};
+}
+>>>
+
+http://jscourse.com/task/to-matrix
+<<<
+function toMatrix (data, rowSize) {
+	var dataCopy = data.slice();
+	var matrix = [];
+	while (dataCopy.length > 0){
+		var row = [];
+		for (var i=0; i < rowSize; i++){
+			var item = dataCopy.shift();
+			if (typeof item != 'undefined'){
+				row.push(item);
+			};
+		};
+		matrix.push(row);
+	}
+	return matrix;
+}
+>>>
+
+http://jscourse.com/task/pick
+<<<
+function pick(obj, keys) {
+	var newObj = {};
+	for (var key in keys){
+		if(obj.hasOwnProperty(keys[key])){
+			newObj[keys[key]] = obj[keys[key]];
+		};
+	};
+	return newObj;
+}
 >>>
