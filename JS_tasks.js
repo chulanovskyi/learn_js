@@ -180,7 +180,17 @@ function compose() {
 
 http://jscourse.com/task/simple-templater
 <<<
-
+function templater(templateString, dataObj) {
+	var newStr = templateString;
+	var reCount = templateString.match(/\$\{/g);
+	for (var i=0; i<reCount.length; i++){
+		for(var key in dataObj){
+			var re = new RegExp('\\$\\{'+key+'\\}');
+			newStr = newStr.replace(re, dataObj[key]);
+		};
+	};
+	return newStr;
+}
 >>>
 
 http://jscourse.com/task/keeper
